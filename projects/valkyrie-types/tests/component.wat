@@ -41,21 +41,9 @@
     (import "wasi:io/streams" (instance $wasi:io/streams
         (export $std::io::InputStream "input-stream" (type (sub resource)))
         (export $std::io::OutputStream "output-stream" (type (sub resource)))
-        (export "[method]input-stream.read" (func
-        ))
-        (export "[method]output-stream.blocking-write-and-flush" (func
-        ))
-        (export "[method]flush" (func
-        ))
-        (export "[method]output-stream.write" (func
-        ))
     ))
     (alias export $wasi:io/streams "input-stream" (type $std::io::InputStream))
     (alias export $wasi:io/streams "output-stream" (type $std::io::OutputStream))
-    (alias export $wasi:io/streams "[method]input-stream.read" (func $std::io::InputStream::read))
-    (alias export $wasi:io/streams "[method]output-stream.blocking-write-and-flush" (func $std::io::OutputStream::blocking_write_and_flush))
-    (alias export $wasi:io/streams "[method]flush" (func $std::io::OutputStream::flush))
-    (alias export $wasi:io/streams "[method]output-stream.write" (func $std::io::OutputStream::write))
     (import "wasi:io/error" (instance $wasi:io/error
         (export $std::io::IoError "error" (type (sub resource)))
     ))
@@ -155,26 +143,6 @@
     ))
     (core func $std::env::run (canon lower
         (func $wasi:cli/run "run")
-        (memory $memory "memory")(realloc (func $memory "realloc"))
-        string-encoding=utf8
-    ))
-    (core func $std::io::InputStream::read (canon lower
-        (func $wasi:io/streams "[method]input-stream.read")
-        (memory $memory "memory")(realloc (func $memory "realloc"))
-        string-encoding=utf8
-    ))
-    (core func $std::io::OutputStream::blocking_write_and_flush (canon lower
-        (func $wasi:io/streams "[method]output-stream.blocking-write-and-flush")
-        (memory $memory "memory")(realloc (func $memory "realloc"))
-        string-encoding=utf8
-    ))
-    (core func $std::io::OutputStream::flush (canon lower
-        (func $wasi:io/streams "[method]flush")
-        (memory $memory "memory")(realloc (func $memory "realloc"))
-        string-encoding=utf8
-    ))
-    (core func $std::io::OutputStream::write (canon lower
-        (func $wasi:io/streams "[method]output-stream.write")
         (memory $memory "memory")(realloc (func $memory "realloc"))
         string-encoding=utf8
     ))
@@ -284,14 +252,6 @@
         ))
         (import "wasi:cli/run" "run" (func $std::env::run
         ))
-        (import "wasi:io/streams" "[method]input-stream.read" (func $std::io::InputStream::read
-        ))
-        (import "wasi:io/streams" "[method]output-stream.blocking-write-and-flush" (func $std::io::OutputStream::blocking_write_and_flush
-        ))
-        (import "wasi:io/streams" "[method]flush" (func $std::io::OutputStream::flush
-        ))
-        (import "wasi:io/streams" "[method]output-stream.write" (func $std::io::OutputStream::write
-        ))
         (import "wasi:cli/stderr" "get-stderr" (func $std::io::standard_error
         ))
         (import "wasi:cli/stdin" "get-stdin" (func $std::io::standard_input
@@ -350,10 +310,6 @@
         (with "wasi:filesystem/types" (instance
         ))
         (with "wasi:io/streams" (instance
-            (export "[method]input-stream.read" (func $std::io::InputStream::read))
-            (export "[method]output-stream.blocking-write-and-flush" (func $std::io::OutputStream::blocking_write_and_flush))
-            (export "[method]flush" (func $std::io::OutputStream::flush))
-            (export "[method]output-stream.write" (func $std::io::OutputStream::write))
         ))
         (with "wasi:io/error" (instance
         ))
