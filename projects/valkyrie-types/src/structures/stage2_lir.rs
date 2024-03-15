@@ -6,9 +6,9 @@ impl Mir2Lir for ValkyrieResource {
     type Context<'a> = &'a ResolveState;
 
     fn to_lir<'a>(&self, graph: &mut DependentGraph, context: Self::Context<'a>) -> Result<Self::Output> {
-        // for method in self.methods.values() {
-        //     method.to_lir(graph, self)?
-        // }
+        for method in self.methods.values() {
+            method.to_lir(graph, &self.resource_name)?
+        }
         *graph += WasiResource {
             symbol: self.resource_name.clone(),
             wasi_module: self.wasi_import.module.clone(),
@@ -23,7 +23,7 @@ impl Mir2Lir for ValkyrieClass {
 
     fn to_lir<'a>(&self, graph: &mut DependentGraph, context: Self::Context<'a>) -> Result<Self::Output> {
         for method in self.methods.values() {
-            method.to_lir(graph, self)?
+            method.to_lir(graph, &self.class_name)?
         }
         // *graph += WasiResource {
         //     symbol: self.class_name.clone(),
@@ -35,10 +35,10 @@ impl Mir2Lir for ValkyrieClass {
 }
 impl Mir2Lir for ValkyrieMethod {
     type Output = ();
-    type Context<'a> = &'a ValkyrieClass;
+    type Context<'a> = &'a Identifier;
 
     fn to_lir<'a>(&self, graph: &mut DependentGraph, context: Self::Context<'a>) -> Result<Self::Output> {
-        let symbol = context.class_name.join(self.method_name.clone());
+        let symbol = context.join(self.method_name.clone());
         match &self.wasi_import {
             Some(s) => {
                 *graph += WasiFunction {
