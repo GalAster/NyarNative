@@ -1,7 +1,7 @@
 use crate::{
     functions::{FunctionBody, FunctionInstance},
     helpers::Mir2Lir,
-    modules::{ModuleItem, ResolveState},
+    modules::{ModuleItem, ResolveContext},
     ValkyrieImportFunction,
 };
 use indexmap::IndexMap;
@@ -26,6 +26,20 @@ pub struct ValkyrieResource {
     /// The wasi import/export name
     pub wasi_import: WasiImport,
     pub imports: IndexMap<Arc<str>, ValkyrieImportFunction>,
+}
+
+/// A primitive
+#[derive(Clone, Eq, PartialEq)]
+pub struct ValkyriePrimitive {
+    r#type: PrimitiveType,
+}
+
+#[derive(Clone, Eq, PartialEq)]
+pub enum PrimitiveType {
+    I32,
+    I64,
+    F32,
+    F64,
 }
 
 #[derive(Clone, Eq, PartialEq)]

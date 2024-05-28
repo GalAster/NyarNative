@@ -25,7 +25,7 @@ mod parser;
 pub struct ValkyrieModule {}
 
 /// Convert file to module
-pub struct ResolveState {
+pub struct ResolveContext {
     pub(crate) package: Arc<str>,
     /// The current namespace
     pub(crate) namespace: Vec<Arc<str>>,
@@ -61,7 +61,7 @@ pub enum ModuleItem {
     Function(ValkyrieNativeFunction),
 }
 
-impl ResolveState {
+impl ResolveContext {
     pub fn new<S: Into<Arc<str>>>(package: S) -> Self {
         Self {
             package: package.into(),
@@ -76,13 +76,13 @@ impl ResolveState {
     }
 }
 
-impl ResolveState {
+impl ResolveContext {
     pub fn reset_namespace(&mut self) {
         self.namespace = vec![];
     }
 }
 
-impl ResolveState {
+impl ResolveContext {
     /// Get the full name path based on package name and namespace, then register the name to local namespace.
     pub fn register_item(&mut self, symbol: &IdentifierNode) -> Identifier {
         let key = Identifier { namespace: vec![], name: symbol.name.clone() };

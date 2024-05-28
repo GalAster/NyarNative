@@ -10,7 +10,7 @@ mod types;
 
 pub use crate::{
     functions::{ValkyrieImportFunction, ValkyrieNativeFunction},
-    modules::{ModuleItem, ResolveState, ValkyrieModule},
+    modules::{ModuleItem, ResolveContext, ValkyrieModule},
     structures::{ValkyrieClass, ValkyrieField, ValkyrieFrom, ValkyrieInto, ValkyrieMethod},
     types::{
         encoding_type::ValkyrieSemanticNumber, enumeration_types::ValkyrieEnumeration, flag_types::ValkyrieFlagation,
