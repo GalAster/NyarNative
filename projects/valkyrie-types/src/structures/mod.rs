@@ -31,14 +31,25 @@ pub struct ValkyrieResource {
 /// A primitive
 #[derive(Clone, Eq, PartialEq)]
 pub struct ValkyriePrimitive {
-    r#type: PrimitiveType,
+    /// The name of the primitive
+    pub primitive_name: Identifier,
+    /// primitive type had no fields, only primitive type wrapper
+    pub wrapper: PrimitiveType,
+    pub imports: IndexMap<Arc<str>, ValkyrieImportFunction>,
+    pub methods: IndexMap<Arc<str>, ValkyrieMethod>,
+    pub from: Vec<ValkyrieFrom>,
+    pub into: Vec<ValkyrieInto>,
 }
 
 #[derive(Clone, Eq, PartialEq)]
 pub enum PrimitiveType {
+    /// Equivalent to the wasm type `i32`
     I32,
+    /// Equivalent to the wasm type `i64`
     I64,
+    /// Equivalent to the wasm type `f32`
     F32,
+    /// Equivalent to the wasm type `f64`
     F64,
 }
 
