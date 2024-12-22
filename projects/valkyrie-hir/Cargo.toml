@@ -1,6 +1,5 @@
 [package]
-name = "legion-pool"
-publish = false
+name = "valkyrie-hir"
 version = "0.0.0"
 authors = ["Aster <192607617@qq.com>"]
 description = "..."
